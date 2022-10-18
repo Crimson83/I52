@@ -29,6 +29,8 @@ string prenom3="Harry";
 Matiere Mat1("Magie",3),Mat2("Potion",2),Mat3("Divination",4),Mat4("Info",1);
 Matiere tab[]={Mat1,Mat2,Mat3,Mat4};
 Etudiant2 Humain(nom3,prenom3,15,4,tab);
+float l[]={12,9,15,14};
+Humain.AjouterNotes(l);
 Humain.affic();
 cout<<Humain.Moyenne()<<endl;
 return 1;
