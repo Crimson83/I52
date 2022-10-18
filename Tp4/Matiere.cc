@@ -1,5 +1,6 @@
 #include "Matiere.h"
 #include <string>
+#include <iostream>
 using namespace std;
 
 Matiere::Matiere(){
@@ -9,7 +10,7 @@ Matiere::Matiere(){
 
 Matiere::Matiere(string n,int c){
   nom=n;
-  coef=n;
+  coef=c;
 }
 
 void Matiere::affic(){

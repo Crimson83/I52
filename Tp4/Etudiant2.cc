@@ -1,8 +1,10 @@
 #include "Etudiant2.h"
 #include "Etudiant1.h"
 #include <string>
+#include <iostream>
+using namespace std;
 
-Etudiant2::Etudiant2(string n,string p,int a,int nb,Matiere* tab)Etudiant1(n,p,a,nb){
+Etudiant2::Etudiant2(string n,string p,int a,int nb,Matiere* tab):Etudiant1(n,p,a,nb){
   mat=new Matiere[nb];
   for(int i=0;i<nb;i++){
     mat[i]=tab[i];
@@ -21,9 +23,9 @@ Etudiant2::~Etudiant2(){
   delete [] mat;
 }
 void Etudiant2::affic(){
-  Etudiant1::affic()
+  Etudiant1::affic();
   for(int i=0;i<nb;i++){
-    cout<<mat[i].getnom<<" : "<<notes[i]<<endl;
+    cout<<mat[i].getnom()<<" : "<<notes[i]<<endl;
   }
 }
 float Etudiant2::Moyenne(){
@@ -40,7 +42,7 @@ Etudiant2& Etudiant2::operator=(const Etudiant2& e){
     this->Etudiant1::operator=(e);
     nb=e.nb;
     delete [] mat;
-    notes=new Matiere[nb];
+    mat=new Matiere[nb];
     for(int i=0;i<nb;i++){
       mat[i]=e.mat[i];
     }

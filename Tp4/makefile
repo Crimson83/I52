@@ -1,13 +1,13 @@
-main: main.o personne.o professeur.o Etudiant1.o
+main: main.o personne.o professeur.o Etudiant1.o Etudiant2.o Matiere.o
 	g++ $^ -Wall -o $@
 
-main.o: main.cc personne.h professeur.h
+main.o: main.cc personne.h professeur.h Etudiant1.h Etudiant2.h Matiere.h
 	g++ -Wall -c $<
 
 Matiere.o: Matiere.cc Matiere.h
 	g++ -Wall -c $<
-	
-Etudiant2.o: Etudiant2.cc Etudiant2.h Etudiant1.h
+
+Etudiant2.o: Etudiant2.cc Etudiant2.h Etudiant1.h Matiere.h
 	g++ -Wall -c $<
 
 Etudiant1.o: Etudiant1.cc Etudiant1.h personne.h
