@@ -6,6 +6,9 @@ main.o: main.cc personne.h professeur.h
 
 Matiere.o: Matiere.cc Matiere.h
 	g++ -Wall -c $<
+	
+Etudiant2.o: Etudiant2.cc Etudiant2.h Etudiant1.h
+	g++ -Wall -c $<
 
 Etudiant1.o: Etudiant1.cc Etudiant1.h personne.h
 	g++ -Wall -c $<
