@@ -21,7 +21,7 @@ def parser(nom,option):
         lignes=file.readlines() #lecture des lignes
         for i in range(1,len(lignes)): #on prend la ligne i
             tmp=re.split('\t|\n',lignes[i]) #on sépare la ligne en mot
-            cle=tmp[-2].title() #on recup la clé
+            cle=tmp[-2]#on recup la clé
             tmp=re.split(' |\t|\n',lignes[i]) #reséparation
             rvb=[0,0,0]
             k,x=0,0
@@ -47,18 +47,17 @@ def convers(dico):
     conversion de dico en liste
     """
     l=[] #creation liste
-    i=0
     for j in dico:
+        l+=[j]
         #ajouter saut indice
         #l+=j #ajout clé
-        i+=1
     l.sort()  #tri
     return l
 
 
-chemin="/etc/X11/rgb.txt"
-option=str(input("Option d'ouverture du fichier :"))
+#chemin="/etc/X11/rgb.txt"
+#option=str(input("Option d'ouverture du fichier :"))
 #gestfich(chemin,option)
-dic={}
-dic=parser(chemin,option)
-print(convers(dic))
+#dic={}
+#dic=parser(chemin,option)
+#print(convers(dic))
