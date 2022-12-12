@@ -21,30 +21,39 @@ class Robot:
             self._x-=clist[rand]ase
         self._EN-=5
 
-    def movebot(event=None,carte):
+    def movebot(event=None):
         """
         déplacement aléatoire du Robot
         """
-        global id
-        x,y=can.coords(iidd)[0],can.coords(id)[1] #recup coord
-        rand=random.randrange(4)                #haut bas gauche droite
+        x,y=can.coords(id)[0],can.coords(id)[1]
+        rand=random.randrange(4)
+        x=int(x//10)
+        y=int(y//10)
+        #print(x,y)
         x1=0
         y1=0
         list=['H','B','G','D']
-        if(list[rand]=='H' and y>10): #verif si on est pas au bord de la carte
-            if(cart[(y/10)-1][x]!=1): #verif mur au dessus
+        #print(list[rand])
+        #print("Position x:",x,"y:",y)
+        if(list[rand]=='H' and y>1):
+            if(presMur(x,y-1)):
                 y1=-10
-        elif(list[rand]=='D' and x<290):
-            if(cart[y][(x/10)+1]!=1):
+                #print(y1)
+        elif(list[rand]=='D' and x<=29):
+            if(presMur(x+1,y)):
                 x1=10
-        elif(list[rand]=='B' and y<190):
-            if(cart[(y/10)+1][x]!=1):
+                #print(x1)
+        elif(list[rand]=='B' and y<=19):
+            if(presMur(x,y+1)):
                 y1=10
-        elif(list[rand]=='G' and x>10):
-            if(cart[y][(x/10)-1]!=1):
+                #print(y1)
+        elif(list[rand]=='G' and x>1):
+            if(presMur(x-1,y)):
                 x1=-10
-        can.move(id,x1,y1))
-        can.after(1000,movebot)
+                #print(x1)
+        can.move(id,x1,y1)
+        #print("on bouge x:",x1," y:",y1)
+        #can.after(100,movebot) récursif déplacement enchainé pour tests
 
     def MI(self):
 

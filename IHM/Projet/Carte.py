@@ -3,12 +3,16 @@ import random
 import time
 def gencarte():
     cart=[]
+    #id=tk.Canvas(root,width=1080,height=720,bg='white')
     for i in range(30):
         cart.append([])
         for j in range(20):
-            #cart[i].append(random.randrange(2))
-            cart[i].append(0)
-    return cart
+            rand=random.randrange(5)
+            if(rand!=1):
+                cart[i].append(0)
+            else:
+                cart[i].append(1)
+    return cart#id
 
 def create_can_carte(carte):
     """
@@ -25,22 +29,25 @@ def create_can_carte(carte):
             y+=10
         k+=10
 
+def presMur(x,y):
+    global carte
+    return carte[y][x]
+
 def movebot(event=None):
     """
     déplacement aléatoire du Robot
     """
     global id
     x,y=can.coords(id)[0],can.coords(id)[1]
-    rand=random.randrange(4)
+    rand=random.randrange(1)
     x1=0
     y1=0
-    print(x,y)
-    list=['H','B','G','D']
+    list=['D','H','B','G']
     if(list[rand]=='H' and y>10):
         y1=-10
-    elif(list[rand]=='D' and x<290):
+    elif(list[rand]=='D' and x<=290):
         x1=10
-    elif(list[rand]=='B' and y<190):
+    elif(list[rand]=='B' and y<=190):
         y1=10
     elif(list[rand]=='G' and x>10):
         x1=-10
@@ -48,6 +55,7 @@ def movebot(event=None):
     can.after(100,movebot)
 
 carte=gencarte()
+print(carte)
 root=tk.Tk()
 root.title("La Guerre Des Robots")
 can=tk.Canvas(root,width=1080,height=720,bg='white')
