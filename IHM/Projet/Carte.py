@@ -28,7 +28,7 @@ def create_can_carte(carte):
             if(carte[i][j]):
                 can.create_rectangle(k,y,k+10,y+10,fill='black',tags='MUR')
             else:
-                can.create_rectangle(k,y,k+10,y+10,fill='white',tags='LAND')
+                can.create_rectangle(k,y,k+10,y+10,fill='white',tags='SOL')
             y+=10
         k+=10
 
@@ -82,11 +82,17 @@ def placebot(NumJ):
     global PlayerList
     x=random.randrange(30)
     y=random.randrange(20)
-    if(carte[x][y]==0):
-        id=can.create_rectangle(x*10+10,y*10+10,x*10+20,y*10+20,fill=ListCoul[NumJ],tags=(NumJ,"Joueur"))
-        PlayerList[NumJ]={x,y,id}
-    else:
-        placebot(NumJ)
+    place=False
+    while(place==False):
+        if(carte[x][y]==0):
+            id=can.create_rectangle(x*10+10,y*10+10,x*10+20,y*10+20,fill=ListCoul[NumJ],tags=(NumJ,"Joueur"))
+            PlayerList[NumJ]=[x,y,id]
+            place=True
+        else:
+            x=random.randrange(30)
+            y=random.randrange(20)
+
+
 
 global carte
 global PlayerList
@@ -103,5 +109,7 @@ create_can_carte(carte)
 #can.after(1,movebot)
 for i in range(4):
     placebot(i)
+    print(PlayerList[i][:2],PlayerList[i][2])
+
 
 root.mainloop()
