@@ -2,16 +2,19 @@ import tkinter as tk
 import random
 import time
 def gencarte():
+    """
+    generation aléatoire carte avec environ 20% de mur
+    """
     cart=[]
     #id=tk.Canvas(root,width=1080,height=720,bg='white')
-    for i in range(30):
+    for x in range(30):
         cart.append([])
-        for j in range(20):
+        for y in range(20):
             rand=random.randrange(5)
             if(rand!=1):
-                cart[i].append(0)
+                cart[x].append(0)
             else:
-                cart[i].append(1)
+                cart[x].append(1)
     return cart#id
 
 def create_can_carte(carte):
@@ -29,39 +32,76 @@ def create_can_carte(carte):
             y+=10
         k+=10
 
-def presMur(x,y):
-    global carte
-    return carte[y][x]
-
 def movebot(event=None):
     """
     déplacement aléatoire du Robot
     """
-    global id
     x,y=can.coords(id)[0],can.coords(id)[1]
-    rand=random.randrange(1)
+    rand=random.randrange(4)
+    x=int(x//10)
+    y=int(y//10)
+    #print(x,y)
     x1=0
     y1=0
-    list=['D','H','B','G']
-    if(list[rand]=='H' and y>10):
-        y1=-10
-    elif(list[rand]=='D' and x<=290):
-        x1=10
-    elif(list[rand]=='B' and y<=190):
-        y1=10
-    elif(list[rand]=='G' and x>10):
-        x1=-10
+    list=['H','B','G','D']
+    #print(list[rand])
+    #print("Position x:",x,"y:",y)
+    if(list[rand]=='H' and y>1):
+        if(presMur(x,y-1)):
+            y1=-10
+            #print(y1)
+    elif(list[rand]=='D' and x<=29):
+        if(presMur(x+1,y)):
+            x1=10
+            #print(x1)
+    elif(list[rand]=='B' and y<=19):
+        if(presMur(x,y+1)):
+            y1=10
+            #print(y1)
+    elif(list[rand]=='G' and x>1):
+        if(presMur(x-1,y)):
+            x1=-10
+            #print(x1)
     can.move(id,x1,y1)
-    can.after(100,movebot)
+    #print("on bouge x:",x1," y:",y1)
+    #can.after(100,movebot) récursif déplacement enchainé pour tests
 
+def presMur(x,y):
+    """
+    il y a t-il un mur au coordonnées passées en paramètres
+    """
+    global carte
+    return not(carte[x-1][y-1])
+
+def placebot(NumJ):
+    """
+    Placement aléatoire d'un robot sur la carte
+    (on le place random)
+    """
+    global carte
+    global PlayerList
+    x=random.randrange(30)
+    y=random.randrange(20)
+    if(carte[x][y]==0):
+        id=can.create_rectangle(x*10+10,y*10+10,x*10+20,y*10+20,fill=ListCoul[NumJ],tags=(NumJ,"Joueur"))
+        PlayerList[NumJ]={x,y,id}
+    else:
+        placebot(NumJ)
+
+global carte
+global PlayerList
+global ListCoul
+ListCoul=["red","cyan","light green","gold"]
+PlayerList={}
 carte=gencarte()
-print(carte)
 root=tk.Tk()
 root.title("La Guerre Des Robots")
 can=tk.Canvas(root,width=1080,height=720,bg='white')
 can.pack()
 create_can_carte(carte)
-global id
-id=can.create_rectangle(10,10,20,20,fill='red',tags=("Joueur1","Joueur"))
-can.after(100,movebot)
+#id=can.create_rectangle(10,10,20,20,fill='red',tags=("Joueur1","Joueur"))
+#can.after(1,movebot)
+for i in range(4):
+    placebot(i)
+
 root.mainloop()
